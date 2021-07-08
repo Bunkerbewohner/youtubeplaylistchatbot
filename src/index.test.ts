@@ -1,4 +1,4 @@
-import {extractYouTubeLinks} from "./index";
+import {extractYouTubeLinks, getVideoIdFromUrl} from "./index";
 
 describe("extractYouTubeLinks", () => {
     it("works for messages that are just links to videos", () => {
@@ -17,4 +17,14 @@ describe("extractYouTubeLinks", () => {
             ["https://youtu.be/4UuY8XdXHjg", "https://www.youtube.com/watch?v=4UuY8XdXHjg"]
         )
     })
+});
+
+describe("getVideoIdFromUrl", () => {
+    it("works", () => {
+        expect(getVideoIdFromUrl("https://www.youtube.com/watch?v=4UuY8XdXHjg"))
+            .toEqual("4UuY8XdXHjg");
+
+        expect(getVideoIdFromUrl("https://youtu.be/4UuY8XdXHjg"))
+            .toEqual("4UuY8XdXHjg");
+    });
 });
