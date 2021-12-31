@@ -1,4 +1,4 @@
-import {extractYouTubeLinks, getVideoIdFromUrl} from "./index";
+import {extractYouTubeLinks, getVideoIdFromUrl} from "./parsing";
 
 describe("extractYouTubeLinks", () => {
     it("works for messages that are just links to videos", () => {

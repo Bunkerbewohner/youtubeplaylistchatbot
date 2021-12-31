@@ -1,0 +1,2 @@
+* delete unused bots
+* Actually check if the bot/user is allowed to see a message.

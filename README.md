@@ -16,6 +16,12 @@ Then authorize the bot to modify YouTube playlists using your YouTube account:
 
 Afterwards all YouTube links posted in any channel will automatically added to the hardcoded playlist.
 
+## Development
+
+1. Get credentials from https://console.cloud.google.com/apis/credentials?project=youtuply
+2. Save JSON as ./.credentials/youtubeauth.json
+3. Set TOKEN env variable to Discord API token
+
 ## TODO
 
 - allow configuration of target playlist
