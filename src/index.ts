@@ -32,9 +32,9 @@ async function loadInstances(onLoadError: (userId: UserId, server: string, error
                 instancesByUser[bot.userId] = bot;
                 bot.onSettingsChanged = (_) => saveInstance(bot!);
                 log(`Loaded bot instance "${bot.userId}" from '${file}'`);
-            } catch (ex) {
+            } catch (ex: any) {
                 const userId = Path.basename(file, ".json");
-                await onLoadError(userId, bot?.settings.server ?? 'unknown', ex.message);
+                await onLoadError(userId, bot?.settings.server ?? 'unknown', ex.toString());
                 log(`Failed to load bot instance from '${file}': ${ex}`);
             }
         }
