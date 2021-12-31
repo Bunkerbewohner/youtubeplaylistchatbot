@@ -7,7 +7,7 @@ RUN mkdir /opt/app
 WORKDIR /opt/app
 
 COPY ./package.json /opt/app/
-RUN npm install --production
+RUN npm install
 
 COPY . /opt/app/
 
