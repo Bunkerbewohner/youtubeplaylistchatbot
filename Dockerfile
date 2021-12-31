@@ -1,12 +1,14 @@
 FROM node:15.6.0
 
+ENV DISCORD_TOKEN=''
+ENV YT_CREDENTIALS=''
+
 RUN mkdir /opt/app
 WORKDIR /opt/app
 
 COPY ./package.json /opt/app/
-COPY ./.credentials /opt/app/.credentials
 RUN npm install
 
 COPY . /opt/app/
 
-CMD npm start
+CMD /opt/app/bin/start.sh

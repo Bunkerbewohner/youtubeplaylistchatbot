@@ -86,7 +86,7 @@ async function main() {
         discordClient.on("ready", resolve);
     });
 
-    await discordClient.login(process.env.TOKEN);
+    await discordClient.login(process.env.DISCORD_TOKEN);
     await onReady;
 
     await loadInstances(async (userId, server: string, error) => {
