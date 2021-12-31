@@ -12,7 +12,8 @@ const discordClient = new Discord.Client();
 const instancesByUser: {[userId: string]: YoutuplyBot} = {};
 
 async function saveInstance(bot: YoutuplyBot, dir: string = "./instances") {
-    await saveJson(`${dir}/${bot.userId}.json`, bot.settings);
+    const filename = `${bot.settings.serverId}_${bot.settings.userId}.json`;
+    await saveJson(`${dir}/${filename}`, bot.settings);
 }
 
 async function loadInstance(path: string): Promise<YoutuplyBot> {
@@ -33,8 +34,16 @@ async function loadInstances(onLoadError: (userId: UserId, server: string, error
                 bot.onSettingsChanged = (_) => saveInstance(bot!);
                 log(`Loaded bot instance "${bot.userId}" from '${file}'`);
             } catch (ex: any) {
-                const userId = Path.basename(file, ".json");
-                await onLoadError(userId, bot?.settings.server ?? 'unknown', ex.toString());
+                const filename = Path.basename(file, ".json");
+                let userId = filename;
+                let serverId = '';
+
+                // some files were saved as [userId].json, some [serverId]_[userId].json
+                if (userId.indexOf('_')) {
+                    [serverId, userId] = filename.split('_');
+                }
+
+                await onLoadError(userId, bot?.settings.serverName ?? serverId ?? 'unknown', ex.toString());
                 log(`Failed to load bot instance from '${file}': ${ex}`);
             }
         }
@@ -57,7 +66,8 @@ async function onMessage(message: Message) {
         const settings: BotSettings = {
             userId,
             connections: {},
-            server: message.guild?.name ?? 'unknown',
+            serverId: message.guild?.id ?? 'unknown',
+            serverName: message.guild?.name ?? 'unknown',
         }
         const bot = instancesByUser[userId] = new YoutuplyBot(settings, discordClient);
         bot.onSettingsChanged = (_) => saveInstance(bot);
@@ -65,9 +75,15 @@ async function onMessage(message: Message) {
         await saveInstance(bot);
     } else {
         if (message.channel.type === 'dm') {
-            const bot = instancesByUser[message.channel.recipient.id];
-            if (bot) {
-                await bot.onMessage(message);
+            const recipientBot = instancesByUser[message.channel.recipient.id];
+            const senderBot = instancesByUser[message.author.id];
+
+            if (recipientBot) {
+                await recipientBot.onMessage(message);
+            }
+
+            if (senderBot) {
+                await senderBot.onMessage(message);
             }
         } else {
             // TODO: Actually check if the bot/user is allowed to see that message.

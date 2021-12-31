@@ -1,3 +1,2 @@
-* BUG: setup on one server overrides another ones because instances are saved by user id (should include server id)
 * delete unused bots
 * Actually check if the bot/user is allowed to see a message.

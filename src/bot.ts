@@ -8,7 +8,8 @@ export type PlaylistID = string;
 
 export interface BotSettings {
     userId: string;
-    server: string;
+    serverId: string;
+    serverName: string;
 
     connections: {[channelId: string]: PlaylistID};
 }
