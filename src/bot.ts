@@ -97,6 +97,8 @@ export class YoutuplyBot {
             for (let video of videos) {
                 try {
                     await addVideoToPlaylist(this.userId, playlistId, video);
+
+                    await message.react('➕')
                 } catch (ex: any) {
                     log("Failed to add video: " + ex.message);
                 }
