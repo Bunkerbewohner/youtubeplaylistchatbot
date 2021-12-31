@@ -67,12 +67,12 @@ export class YoutuplyBot {
 
                     await this.onHelp(message);
                 }
-            } catch (ex) {
+            } catch (ex: any) {
                 try {
                     // inform user that something went wrong
                     const user = await this.discordClient.users.fetch(this.userId);
                     await user.send(`Error processing command: ${ex}`);
-                } catch (ex) {
+                } catch (ex: any) {
                     log(`Failed to send error: User '${this.userId}' doesn't exist.`);
                 }
             }
@@ -97,7 +97,7 @@ export class YoutuplyBot {
             for (let video of videos) {
                 try {
                     await addVideoToPlaylist(this.userId, playlistId, video);
-                } catch (ex) {
+                } catch (ex: any) {
                     log("Failed to add video: " + ex.message);
                 }
             }
@@ -132,7 +132,7 @@ export class YoutuplyBot {
         try {
             await addVideoToPlaylist(this.userId, playlistId, videoUrl);
             await message.reply(`Added ${videoUrl} to https://www.youtube.com/playlist?list=${playlistId}`)
-        } catch (ex) {
+        } catch (ex: any) {
             await message.reply("Failed to add video to playlist: " + ex.message);
         }
     }

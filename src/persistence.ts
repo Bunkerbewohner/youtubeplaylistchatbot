@@ -13,7 +13,7 @@ export async function saveJson<T>(path: string, object: T) {
 export async function ensureDir(path: string) {
     try {
         await fs.mkdir(path, {recursive: true});
-    } catch (ex) {
+    } catch (ex: any) {
         // ignore if dir already exists
         if (!ex.message.indexOf("EEXISTS")) {
             throw ex;

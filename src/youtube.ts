@@ -35,7 +35,7 @@ async function getAuth(userId: UserId): Promise<YoutubeAuth> {
         try {
             ytAuth = await loadJson<YoutubeAuth>(getAuthPathForUser(userId));
             storedAuth[userId] = ytAuth;
-        } catch (ex) {
+        } catch (ex: any) {
             throw new Error("Couldn't load credentials. Please use '!ytp auth' to authorize me.");
         }
     }

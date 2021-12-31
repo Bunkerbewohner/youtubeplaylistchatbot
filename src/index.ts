@@ -98,7 +98,7 @@ async function main() {
             const user = await discordClient.users.fetch(userId);
             await user.send(`Hi! There is a problem with your Youtuply setup. 
             Please repeat the setup using '!ytp setup' on some channel of the server '${server}'`)
-        } catch (ex) {
+        } catch (ex: any) {
             log(`User '${userId}' could not be loaded.`);
         }
     });
